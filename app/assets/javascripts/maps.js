@@ -27,20 +27,15 @@ function initialize() {
       {name: "Styled Map"});
 
   var heatmapData = [
-    new google.maps.LatLng(34.0108067,-118.4922241),
-    new google.maps.LatLng(34.0108069,-118.4922249),
-    new google.maps.LatLng(34.0108071,-118.4922251),
-    new google.maps.LatLng(34.0108073,-118.4922261),
-    new google.maps.LatLng(34.0108075,-118.4922271),
-    new google.maps.LatLng(34.0108078,-118.4922281),
-    new google.maps.LatLng(34.0108081,-118.4922291),
-    new google.maps.LatLng(34.0108084,-118.4922101),
-    new google.maps.LatLng(34.0108086,-118.4922111),
-    new google.maps.LatLng(34.0108092,-118.4922121),
-    new google.maps.LatLng(34.0108096,-118.4922131),
-    new google.maps.LatLng(34.0108099,-118.4922141),
-    new google.maps.LatLng(34.0108103,-118.4922151),
-    new google.maps.LatLng(34.0108107,-118.4922161)
+    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
+    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
+    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
+    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
+    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
+    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
+    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
+    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
+    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2)
   ];
 
   var mapOptions = {
@@ -54,26 +49,17 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById('googleMap'),
     mapOptions);
 
- 
-
   map.setOptions({styles: styles});
   map.mapTypes.set('map_style', styledMap);
   map.setMapTypeId('map_style');
 
  var heatmap = new google.maps.visualization.HeatmapLayer({
-    data: heatmapData,
-    setMap: map
+    data: heatmapData
   });
+ heatmap.setMap(map)
 
 }
 
-function loadScript() {
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = 'https://maps.googleapis.com/maps/api/js?' +
-      '&signed_in=true&callback=initialize';
-  document.body.appendChild(script);
-}
-
-
-window.onload = loadScript;
+// The init function needs to run on load
+google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'page:load', initialize)
