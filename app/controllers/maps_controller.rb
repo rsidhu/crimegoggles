@@ -1,6 +1,22 @@
 class MapsController < ApplicationController
-  
+
   def index
+
+    if params[:crime]
+      @data = Map.where("crime ILIKE ?", '%' + params[:crime] + '%').limit(20)
+    else
+      @data = Map.limit(20)
+    end
+
+    respond_to do |format|
+      format.html {
+        render
+      }
+      format.json {
+        render json: @data
+      }
+    end
+
   end
 
   def show
@@ -20,4 +36,5 @@ class MapsController < ApplicationController
 
   def destroy
   end
+
 end
