@@ -6,6 +6,7 @@ class MapsController < ApplicationController
         .select("ROUND(lat::NUMERIC, 3) AS lat, ROUND(lon::NUMERIC, 3) AS lon, count(*) as weight")
         .where("lat IS NOT NULL")
         .group("ROUND(lat::NUMERIC, 3), ROUND(lon::NUMERIC, 3)")
+        .having("COUNT(*) > 2")
 
     if params[:crime]
       @data = @query.where("crime ILIKE ?", '%' + params[:crime] + '%')

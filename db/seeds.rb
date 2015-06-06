@@ -25,8 +25,9 @@ size = response["data"].length
 i = 0
 response["data"].each do | row |
 	i = i + 1
+	next unless row[21][1] # Skip rows that don't have a lat / lon
 	Map.create(id: row[0], crime: row[16], lat: row[21][1], lon: row[21][2])
 	printout "\rProgress: " + i.to_s + " of " + size.to_s
 end
 
-puts "Completed"
+puts "\nCompleted"

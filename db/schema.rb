@@ -17,11 +17,11 @@ ActiveRecord::Schema.define(version: 20150606000900) do
   enable_extension "plpgsql"
 
   create_table "maps", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "crime"
-    t.float    "lat"
-    t.float    "lon"
+    t.decimal  "lat",        precision: 9, scale: 6
+    t.decimal  "lon",        precision: 9, scale: 6
   end
 
   create_table "users", force: :cascade do |t|

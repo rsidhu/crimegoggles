@@ -48,23 +48,26 @@ function initialize() {
 
   $.get(url, function(results){
 
+    var bounds = new google.maps.LatLngBounds();
+
     var coords = [];
     for(var i = 0; i < results.length; i++){
 
-      console.log(results[i].lat, results[i].lon)
-
       var coord = new google.maps.LatLng(results[i].lat, results[i].lon)
       coords.push({location: coord, weight: results[i].weight})
-
+      bounds.extend(coord)
 
     }
   
-   var heatmap = new google.maps.visualization.HeatmapLayer({
+    var heatmap = new google.maps.visualization.HeatmapLayer({
       data: coords,
       dissipating: false,
-      radius: 0.005
+      radius: 0.007
     });
     heatmap.setMap(map)
+
+    map.fitBounds(bounds)
+
   })
 
 }
