@@ -2,10 +2,15 @@ class MapsController < ApplicationController
 
   def index
 
+    @query = Map
+        .select("ROUND(lat::NUMERIC, 3) AS lat, ROUND(lon::NUMERIC, 3) AS lon, count(*) as weight")
+        .where("lat IS NOT NULL")
+        .group("ROUND(lat::NUMERIC, 3), ROUND(lon::NUMERIC, 3)")
+
     if params[:crime]
-      @data = Map.where("crime ILIKE ?", '%' + params[:crime] + '%').limit(20)
+      @data = @query.where("crime ILIKE ?", '%' + params[:crime] + '%')
     else
-      @data = Map.limit(20)
+      @data = @query
     end
 
     respond_to do |format|

@@ -22,21 +22,10 @@ function initialize() {
       ]
     }
   ];
+  var styles = {}
 
   var styledMap = new google.maps.StyledMapType(styles,
       {name: "Styled Map"});
-
-  var heatmapData = [
-    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
-    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
-    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
-    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
-    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
-    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
-    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
-    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2),
-    new google.maps.LatLng(34 + Math.random() * 0.2 ,-118 + Math.random() * 0.2)
-  ];
 
   var mapOptions = {
     zoom: 13,
@@ -53,10 +42,30 @@ function initialize() {
   map.mapTypes.set('map_style', styledMap);
   map.setMapTypeId('map_style');
 
- var heatmap = new google.maps.visualization.HeatmapLayer({
-    data: heatmapData
-  });
- heatmap.setMap(map)
+
+  //Grab data from JSON API
+  var url = window.location.origin + window.location.pathname + ".json" + window.location.search
+
+  $.get(url, function(results){
+
+    var coords = [];
+    for(var i = 0; i < results.length; i++){
+
+      console.log(results[i].lat, results[i].lon)
+
+      var coord = new google.maps.LatLng(results[i].lat, results[i].lon)
+      coords.push({location: coord, weight: results[i].weight})
+
+
+    }
+  
+   var heatmap = new google.maps.visualization.HeatmapLayer({
+      data: coords,
+      dissipating: false,
+      radius: 0.005
+    });
+    heatmap.setMap(map)
+  })
 
 }
 
