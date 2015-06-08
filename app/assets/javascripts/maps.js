@@ -67,9 +67,23 @@ function initialize() {
 
     map.fitBounds(bounds)
 
+    var marker = new google.maps.Marker({
+    position: new google.maps.LatLng(34.02983, -118.4393936),
+    icon: {
+      path: google.maps.SymbolPath.SQUARE,
+      scale: 3
+    },
+    draggable: true,
+    map: map
+  });
+
+      
   })
 
 }
+
+var pawnshops = [
+]
 
 // The init function needs to run on load
 google.maps.event.addDomListener(window, 'load', initialize);
