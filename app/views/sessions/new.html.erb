@@ -1,16 +1,62 @@
-<div id='login'>
-<h1 id='login-header'>Log In</h1>
-<%= form_for :login do |f| %>
-  <div>
-    <% f.label :email%>
-    <%= f.text_field :email, :placeholder => "Enter your email"  %>
+<%=image_tag("scarla2.png", class: "logo")%>
+
+
+<div class="container">
+      <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-login">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-6">
+                <a href="#" class="active" id="login-form-link">Login</a>
+              </div>
+              <div class="col-xs-6">
+                <a href="http://localhost:3000/users/new" id="register-form-link">Register</a>
+              </div>
+            </div>
+            <hr>
+          </div>
+          <div class="panel-body">
+          <%= form_for :login do |f| %>
+            <div class="row">
+              <div class="col-lg-12">
+                <form id="login-form" action="http://phpoll.com/login/process" method="post" role="form" style="display: block;">
+                  <div class="form-group">
+                    <% f.label :email%>
+                    <%= f.text_field :email, :placeholder => "Enter your email"  %>
+                  </div>
+                  <div class="form-group">
+                    <% f.label :password %>
+                    <%= f.password_field :password, :placeholder => "Enter your password" %>
+                  </div>
+                  <div class="form-group text-center">
+                    <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                    <label for="remember"> Remember Me</label>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-offset-3">
+                        <div class="button">
+                        <%= f.submit 'Log In', :class => "btn" %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="text-center">
+                          <a href="http://phpoll.com/recover" tabindex="5" class="forgot-password">Forgot Password?</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
   </div>
-  <div>
-    <% f.label :password %>
-    <%= f.password_field :password, :placeholder => "Enter your password" %>
-  </div>
-  <div id='login-button'>
-    <%= f.submit 'Log In' %>
-  </div>
-</div>
-<% end %>
