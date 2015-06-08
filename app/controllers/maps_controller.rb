@@ -1,7 +1,6 @@
 class MapsController < ApplicationController
 
   def index
-
     @query = Map
         .select("ROUND(lat::NUMERIC, 3) AS lat, ROUND(lon::NUMERIC, 3) AS lon, count(*) as weight")
         .where("lat IS NOT NULL")

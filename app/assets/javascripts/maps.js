@@ -1,4 +1,6 @@
 function initialize() {
+  
+  //Styles the googlemaps layout
   var styles = [
     {
       stylers: [
@@ -22,68 +24,59 @@ function initialize() {
       ]
     }
   ];
-  // var styles = {}
 
+  //Declares map style in variable
   var styledMap = new google.maps.StyledMapType(styles,
       {name: "Styled Map"});
 
-  //Grab data from JSON API
+  //Grabs data from JSON API
   var url = window.location.origin + window.location.pathname + ".json" + window.location.search
 
   $.get(url, function(results){
 
-      var mapOptions = {
-        zoom: 13,
-        mapTypeControlOptions: {
-          mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
-        }
-      };
+    //Sets map options
+    var mapOptions = {
+      zoom: 13,
+      mapTypeControlOptions: {
+        mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+      }
+    };
 
-      var map = new google.maps.Map(document.getElementById('googleMap'),
-        mapOptions);
+    //Declares new map and attaches it to googleMap div
+    var map = new google.maps.Map(document.getElementById('googleMap'),
+      mapOptions);
 
-      map.setOptions({styles: styles});
-      map.mapTypes.set('map_style', styledMap);
-      map.setMapTypeId('map_style');
+    //Applies map style to map
+    map.setOptions({styles: styles});
+    map.mapTypes.set('map_style', styledMap);
+    map.setMapTypeId('map_style');
 
-
+    //Ensures that the map loads where the coordinates are
     var bounds = new google.maps.LatLngBounds();
 
+    //Iterates through coordinates from JSON data and displays them
     var coords = [];
     for(var i = 0; i < results.length; i++){
-
       var coord = new google.maps.LatLng(results[i].lat, results[i].lon)
       coords.push({location: coord, weight: results[i].weight})
       bounds.extend(coord)
-
     }
-  
+
+    //Sets heatmap settings
     var heatmap = new google.maps.visualization.HeatmapLayer({
       data: coords,
       dissipating: false,
       radius: 0.007
     });
+
+    //Sets map to view heatmap
     heatmap.setMap(map)
 
+    //Sets bounds as declared on line 55
     map.fitBounds(bounds)
 
-    var marker = new google.maps.Marker({
-    position: new google.maps.LatLng(34.02983, -118.4393936),
-    icon: {
-      path: google.maps.SymbolPath.SQUARE,
-      scale: 3
-    },
-    draggable: true,
-    map: map
-  });
-
-      
   })
-
 }
-
-var pawnshops = [
-]
 
 // The init function needs to run on load
 google.maps.event.addDomListener(window, 'load', initialize);
