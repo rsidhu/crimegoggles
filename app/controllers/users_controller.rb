@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 		unless session[:user_id]
 			redirect_to login_path
 		else
-			render 'maps/index'
+			redirect_to maps_path
 		end
 	end
 
