@@ -1,14 +1,16 @@
-<h1>Log In</h1>
+<div id='login'>
+<h1 id='login-header'>Log In</h1>
 <%= form_for :login do |f| %>
   <div>
-    <%= f.label :email %>
-    <%= f.text_field :email %>
+    <% f.label :email%>
+    <%= f.text_field :email, :placeholder => "Enter your email"  %>
   </div>
   <div>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
+    <% f.label :password %>
+    <%= f.password_field :password, :placeholder => "Enter your password" %>
   </div>
-  <div>
+  <div id='login-button'>
     <%= f.submit 'Log In' %>
   </div>
+</div>
 <% end %>
